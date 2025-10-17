@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elijah Faith Adeiza - Flutter Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --accent: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+            opacity: 0.3;
+            top: -250px;
+            right: -250px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h2 {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            margin-top: 0.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--dark);
+            border: 1px solid #e2e8f0;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 2rem;
+            color: white;
+        }
+
+        .project-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-type {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .project-body {
+            padding: 1.5rem;
+        }
+
+        .project-body p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-badge {
+            background: #e0e7ff;
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 0.75rem;
+            text-align: center;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .project-link:hover {
+            background: var(--secondary);
+        }
+
+        .experience-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+        }
+
+        .experience-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--light);
+        }
+
+        .experience-header {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .experience-period {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .education-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .education-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .education-card:hover {
+            transform: translateX(10px);
+        }
+
+        .education-degree {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .education-school {
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .education-year {
+            color: var(--gray);
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            word-break: break-word;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.5rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 3rem 1rem;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 2rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">EFA</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Elijah Faith Adeiza</h1>
+            <h2>Flutter Mobile Application Developer</h2>
+            <p>Crafting secure, scalable, and user-friendly mobile experiences for fintech, e-commerce, and health applications. Specialized in building cross-platform solutions that make an impact.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <section id="about" class="section">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>I'm a passionate Mobile Application Developer with hands-on experience designing, developing, and deploying fintech, ride-hailing, health, and e-commerce applications for Android and iOS. My expertise lies in creating secure, scalable, and user-friendly solutions that solve real-world problems.</p>
+                <p>With a strong foundation in Flutter and Dart, I specialize in building cross-platform applications that deliver exceptional user experiences. I've successfully published multiple applications on Google Play Store and Apple Store, implementing features like KYC verification, real-time transactions, push notifications, and payment gateway integrations.</p>
+                <p>My approach combines technical excellence with a deep understanding of user needs, ensuring every application I build is both functional and delightful to use.</p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card">
+                    <div class="stat-number">6+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Apps Published</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Client Satisfaction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Platform Coverage</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section" style="background: white;">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Languages & Frameworks</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Flutter</span>
+                    <span class="skill-tag">Dart</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Node.js</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>State Management</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Riverpod</span>
+                    <span class="skill-tag">Provider</span>
+                    <span class="skill-tag">GetX</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Mobile Development</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Android</span>
+                    <span class="skill-tag">iOS</span>
+                    <span class="skill-tag">Responsive UI/UX</span>
+                    <span class="skill-tag">Cross-Platform</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>APIs & Integrations</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Firebase</span>
+                    <span class="skill-tag">WebSocket</span>
+                    <span class="skill-tag">Paystack</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Fintech Expertise</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">KYC Verification</span>
+                    <span class="skill-tag">Digital Wallets</span>
+                    <span class="skill-tag">Transaction Security</span>
+                    <span class="skill-tag">Push Notifications</span>
+                </div>
+            </div>
+            <div class="skill-category">
+                <h3>Tools & Platforms</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">Firebase</span>
+                    <span class="skill-tag">Play Store</span>
+                    <span class="skill-tag">App Store</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Atlas Digital</h3>
+                    <p class="project-type">Fintech Application</p>
+                </div>
+                <div class="project-body">
+                    <p>A comprehensive fintech application providing financial services with secure account management and real-time transactions.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter</span>
+                        <span class="tech-badge">Riverpod</span>
+                        <span class="tech-badge">REST API</span>
+                        <span class="tech-badge">Firebase</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.addosser.atlas" target="_blank" class="project-link">View on Play Store</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Ciddess Ride-Hailing</h3>
+                    <p class="project-type">Ride-Hailing Platform</p>
+                </div>
+                <div class="project-body">
+                    <p>Complete ride-hailing solution with rider and driver applications featuring real-time tracking and fare calculations.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter</span>
+                        <span class="tech-badge">WebSocket</span>
+                        <span class="tech-badge">Real-time Tracking</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://play.google.com/store/apps/details?id=ng.com.ciddess.driverApp" target="_blank" class="project-link">Driver App</a>
+                        <a href="https://play.google.com/store/apps/details?id=ng.com.ciddess.superApp" target="_blank" class="project-link">Rider App</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Saleko</h3>
+                    <p class="project-type">E-commerce Application</p>
+                </div>
+                <div class="project-body">
+                    <p>Mobile shopping application for Lagos users with secure payment gateway integration and intuitive user experience.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter</span>
+                        <span class="tech-badge">Paystack</span>
+                        <span class="tech-badge">Responsive UI</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://play.google.com/store/apps/details?id=com.saleko.saleko&hl=en" target="_blank" class="project-link">View on Play Store</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>EvalTopUp</h3>
+                    <p class="project-type">Fintech Application</p>
+                </div>
+                <div class="project-body">
+                    <p>Fintech app for airtime, data, and utility payments with KYC verification and Flutter Wave payment integration.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter</span>
+                        <span class="tech-badge">Provider</span>
+                        <span class="tech-badge">Flutter Wave</span>
+                        <span class="tech-badge">KYC</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" style="background: var(--gray); cursor: default;">Awaiting Approval</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Tefind</h3>
+                    <p class="project-type">Multi-Vendor E-commerce</p>
+                </div>
+                <div class="project-body">
+                    <p>Multi-vendor e-commerce platform with comprehensive vendor management and secure payment processing.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter</span>
+                        <span class="tech-badge">Riverpod</span>
+                        <span class="tech-badge">KYC</span>
+                        <span class="tech-badge">Paystack</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" style="background: var(--gray); cursor: default;">Awaiting Approval</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-header">
+                    <h3>Dear Henrietta</h3>
+                    <p class="project-type">Health & Lifestyle</p>
+                </div>
+                <div class="project-body">
+                    <p>Health-focused application with real-time messaging between therapists and users using WebSocket technology.</p>
+                    <div class="project-tech">
+                        <span class="tech-badge">Flutter</span>
+                        <span class="tech-badge">GetX</span>
+                        <span class="tech-badge">Socket.io</span>
+                        <span class="tech-badge">Paystack</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link" style="background: var(--gray); cursor: default;">Awaiting Approval</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section" style="background: white;">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="experience-timeline">
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="experience-title">Mobile Application Developer</div>
+                    <div class="experience-company">Freelance / Contract</div>
+                    <div class="experience-period">2019 – Present</div>
+                </div>
+                <ul style="color: var(--gray); line-height: 1.8;">
+                    <li>Designed, developed, and deployed multiple cross-platform mobile applications across fintech, ride-hailing, e-commerce, and health sectors</li>
+                    <li>Collaborated with backend engineers to integrate REST APIs for real-time data synchronization</li>
+                    <li>Implemented KYC processes, secure payments, and notification systems for fintech applications</li>
+                    <li>Optimized applications for performance, scalability, and enhanced user experience</li>
+                    <li>Successfully deployed and maintained apps on Google Play Store and Apple Store</li>
+                </ul>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="experience-title">Mobile Developer</div>
+                    <div class="experience-company">Profectus Technologies Ltd, Lagos</div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="experience-title">Mobile App Developer & Backend Node.js Developer</div>
+                    <div class="experience-company">Dear Henrietta Ltd, Lagos</div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div class="experience-title">Mobile App Developer</div>
+                    <div class="experience-company">Spay Topup Ltd, Lagos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <h2 class="section-title">Education & Certifications</h2>
+        <div class="education-grid">
+            <div class="education-card">
+                <div class="education-degree">BNSC (in View)</div>
+                <div class="education-school">Ahmadu Bello University Zaria</div>
+                <div class="education-year">Expected 2026</div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-degree">Registered Nurse (RN)</div>
+                <div class="education-school">Kogi State College of Nursing and Midwifery, Obangede</div>
+                <div class="education-year">2022</div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-degree">Mobile Application Development</div>
+                <div class="education-school">Codar Tech Africa, Lagos State</div>
+            </div>
+
+            <div class="education-card">
+                <div class="education-degree">Certified DevOps/Cloud Engineer</div>
+                <div class="education-school
